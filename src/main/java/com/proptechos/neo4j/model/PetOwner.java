@@ -11,10 +11,10 @@ import java.util.List;
 @Getter
 @Setter
 @Node("PetOwner")
-public abstract class PetOwner {
+public abstract class PetOwner extends BaseClass {
 
-    @Id
-    private String uuid;
+//    @Id
+//    private String uuid;
 
     private String name;
 

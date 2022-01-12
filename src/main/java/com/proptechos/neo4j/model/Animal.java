@@ -10,8 +10,5 @@ import org.springframework.data.neo4j.core.schema.Node;
 @Node("Animal")
 public abstract class Animal extends BaseClass {
 
-//    @Id
-//    private String uuid;
-
     private String name;
 }

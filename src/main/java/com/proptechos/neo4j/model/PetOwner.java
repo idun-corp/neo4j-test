@@ -13,9 +13,6 @@ import java.util.List;
 @Node("PetOwner")
 public abstract class PetOwner extends BaseClass {
 
-//    @Id
-//    private String uuid;
-
     private String name;
 
     @Relationship(type = "hasPet")

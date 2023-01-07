@@ -44,7 +44,7 @@
 //            .withMaxTransactionRetryTime(5, TimeUnit.SECONDS)
 //            .build();
 //
-//        return GraphDatabase.routingDriver(routingUris, authToken, config);
+//        return GraphDatabase.driver(routingUris.get(0), authToken, config);
 //    }
 //
 //    @Bean

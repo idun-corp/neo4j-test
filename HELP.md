@@ -1,15 +1,62 @@
 # Getting Started
 
-### Reference Documentation
-For further reference, please consider the following sections:
+Standard Spring Boot 3 application that is started with host 'http://localhost:8083/test'
 
-* [Official Apache Maven documentation](https://maven.apache.org/guides/index.html)
-* [Spring Boot Maven Plugin Reference Guide](https://docs.spring.io/spring-boot/docs/2.6.1/maven-plugin/reference/html/)
-* [Create an OCI image](https://docs.spring.io/spring-boot/docs/2.6.1/maven-plugin/reference/html/#build-image)
-* [Spring Data Neo4j](https://docs.spring.io/spring-boot/docs/2.6.1/reference/htmlsingle/#boot-features-neo4j)
+In InternalAuthFilter any user is authenticated with internal UserPrincipal object.
+Security set-up is done via ApiSecurityConfig.
 
-### Guides
-The following guides illustrate how to use some features concretely:
+### REST Endpoint
+`http://localhost:8083/test/json/dog/234c8e97-05c4-4778-a544-32ba91b2ea55`
 
-* [Accessing Data with Neo4j](https://spring.io/guides/gs/accessing-data-neo4j/)
+With or without security works fine
+
+### GraphQL Endpoint
+
+````
+{
+  getDog(id: "001a04dc-92ad-450d-bfa6-096428167b43") {
+    uuid
+    name
+  }
+}
+````
+
+## Without Security
+````
+.authorizeHttpRequests((authorizeRequests) ->
+                authorizeRequests.anyRequest().permitAll())
+````
+
+Response 200 and response body:
+
+````
+{
+  "data": {
+    "getDog": {
+      "uuid": "001a04dc-92ad-450d-bfa6-096428167b43",
+      "name": "Test dog 001a04dc-92ad-450d-bfa6-096428167b43"
+    }
+  }
+}
+````
+
+## With Security
+````
+.authorizeHttpRequests((authorizeRequests) ->
+                authorizeRequests.anyRequest().authenticated())
+````
+
+Response 403 and GraphiQL response:
+
+````
+{
+  "errors": [
+    {
+      "message": "Unexpected end of JSON input",
+      "stack": "SyntaxError: Unexpected end of JSON input\n    at https://unpkg.com/graphiql/graphiql.min.js:29:464502\n    at Generator.next (<anonymous>)\n    at l (https://unpkg.com/graphiql/graphiql.min.js:29:462623)\n    at u (https://unpkg.com/graphiql/graphiql.min.js:29:462739)"
+    }
+  ]
+}
+````
+
 
